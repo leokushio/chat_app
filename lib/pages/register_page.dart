@@ -1,3 +1,4 @@
+import 'package:chat_app/components/google_button.dart';
 import 'package:chat_app/components/my_button.dart';
 import 'package:chat_app/components/my_colorized_txt.dart';
 import 'package:chat_app/components/my_textfield.dart';
@@ -20,6 +21,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
 
   // text controller
+  final userNameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final confirmPassController = TextEditingController();
@@ -37,7 +39,9 @@ class _RegisterPageState extends State<RegisterPage> {
     try{
       await authService.signUpWithEmailAndPassword(
         emailController.text, 
-        passController.text);
+        passController.text,
+        userNameController.text
+        );
       ScaffoldMessenger.of(context)
       .showSnackBar(
         const SnackBar(content: Text('Succesfull Sign Up!')));
@@ -55,17 +59,17 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(40.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.message,
-                size: 80,
-                color: Colors.grey,
+               Image.asset(
+                'lib/assets/chat-bubble.png',
+                height: 150,
+
                 ),
 
               const SizedBox(height: 10),
@@ -78,6 +82,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: emailController, 
                 obscureText: false, 
                 hintText: 'Email'),
+
+              const SizedBox(height: 10),
+
+              MyTextField(
+                controller: userNameController, 
+                obscureText: false, 
+                hintText: 'User name'),
 
               const SizedBox(height: 10),
 
@@ -97,7 +108,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
               MyButton(text: 'Sign up', onTap: signUp,),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
+
+              const Text(
+                'or',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+                ),
+                ),
+
+              const SizedBox(height: 40),
+
+              GoogleButton(),
+
+              const SizedBox(height: 80),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

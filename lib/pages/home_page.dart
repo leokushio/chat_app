@@ -1,7 +1,12 @@
 
 import 'package:chat_app/pages/chat_page.dart';
+import 'package:chat_app/pages/contacts_page.dart';
+import 'package:chat_app/pages/messages_page.dart';
+import 'package:chat_app/pages/profile_page.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,66 +19,66 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int index = 0;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   //sign user out
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.signOut();
   }
+  final navigationKey = GlobalKey<CurvedNavigationBarState>();
+  final List screens = [
+    MessagesPage(),
+    ContactsPage(),
+    ProfilePage(),
+
+  ];
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        backgroundColor: Color.fromARGB(255, 141, 184, 243),
+        title: const Text('Messages'),
         actions: [
           IconButton(
             onPressed: signOut, 
             icon: const Icon(Icons.logout))
         ],
       ),
-      body: _buildUserList(),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        // child: _buildUserList(),
+        child: screens[index],
+      ),
+
+
+      bottomNavigationBar: CurvedNavigationBar(
+        key: navigationKey,
+        onTap: (index) => setState(() {this.index = index;}),
+        backgroundColor: Colors.white,
+        color: Colors.blueAccent,
+        animationDuration: Duration(milliseconds: 300),
+        items: const [
+          CurvedNavigationBarItem(
+            child: Icon(Icons.message_outlined, color: Colors.white,),
+            label: 'Messages',
+            labelStyle: TextStyle(color: Colors.white)
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.group, color: Colors.white,),
+            label: 'Contacts',
+            labelStyle: TextStyle(color: Colors.white)
+          ),
+          CurvedNavigationBarItem(
+            child: Icon(Icons.person, color: Colors.white,),
+            label: 'Profile',
+            labelStyle: TextStyle(color: Colors.white)
+          ),
+        ]
+        ),
     );
   }
-  Widget _buildUserList(){
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').snapshots(), 
-      builder: (context, snapshot) {
-        if(snapshot.hasError){
-          return const Text('error');
-        }
-        if(snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
-        }
-        return ListView(
-          children: snapshot.data!.docs
-            .map<Widget>((doc) => _buildUserListItem(doc))
-            .toList()
-        );
-      }
-      );
-  }
-  //build individual lists
-  Widget _buildUserListItem(DocumentSnapshot document){
-    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-    //display all users except current user
-    if(_auth.currentUser!.email != data['email']){
-      return ListTile(
-        title: Text(data['email']),
-        onTap: () {
-          Navigator.push(
-            context, 
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                receiverUserEmail: data['email'], 
-                receiverUserId: data['uid'])
-              ));
-        },
-      );
-    }else {
-      return Container();
-    }
-
-  }
 }

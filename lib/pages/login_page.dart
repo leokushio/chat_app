@@ -1,10 +1,12 @@
 
+import 'package:chat_app/components/google_button.dart';
 import 'package:chat_app/components/my_button.dart';
 import 'package:chat_app/components/my_colorized_txt.dart';
 import 'package:chat_app/components/my_textfield.dart';
 import 'package:chat_app/components/my_typer_txt.dart';
 import 'package:chat_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 
@@ -44,18 +46,19 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(40.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.message,
-                size: 80,
-                color: Colors.grey,
+              Image.asset(
+                'lib/assets/chat-bubble.png',
+                height: 150,
+
                 ),
+              
 
               const SizedBox(height: 10),
 
@@ -79,7 +82,21 @@ class _LoginPageState extends State<LoginPage> {
 
               MyButton(text: 'Sign In', onTap: signIn,),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
+
+              const Text(
+                'or',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+                ),
+                ),
+
+              const SizedBox(height: 40),
+
+              GoogleButton(),
+
+              const SizedBox(height: 80),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -87,13 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                   const Text('Not a member? '),
                   MyColorizedTxt(
                     onTap: widget.onTap,
-                    // onTap: () {                      
-                    //   Navigator.pushNamed(context, '/register_page');
-                    // },
                     text: 'Register Now!',
                     )
                 ],
-              )
+              ),
+              
             ],
           ),
         ),
