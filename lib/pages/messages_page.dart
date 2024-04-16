@@ -1,4 +1,5 @@
 import 'package:chat_app/model/last_message.dart';
+import 'package:chat_app/model/profile_pic.dart';
 import 'package:chat_app/pages/chat_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,7 +48,7 @@ class _MessagesPageState extends State<MessagesPage> {
     //display all users except current user
     if(auth.currentUser!.email != data['email']){
       return ListTile(
-        leading: CircleAvatar(radius: 30,),
+        leading: ProfilePic(userId: data['uid'], radius: 30),
         title: Text(
           data['userName'],
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -60,7 +61,9 @@ class _MessagesPageState extends State<MessagesPage> {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 receiverUserEmail: data['email'], 
-                receiverUserId: data['uid'])
+                receiverUserId: data['uid'],
+                receiverUserName: data['userName'],
+                )
               ));
         },
       );

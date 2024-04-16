@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class ProfilePic extends StatelessWidget {
   final String userId;
+  final double radius;
 
   const ProfilePic({
     required this.userId,
+    required this.radius,
     super.key
     });
 
@@ -22,8 +24,9 @@ class ProfilePic extends StatelessWidget {
         }
         String imageUrl = snapshot.data!.get('profilePic');
         return CircleAvatar(
-          backgroundImage: Image.network(imageUrl).image,
-          radius: 70,
+          backgroundImage: imageUrl == ''
+          ? Image.asset('lib/assets/default_profile_pic.jpg').image : Image.network(imageUrl).image,
+          radius: radius,
 
         );
       }

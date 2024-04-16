@@ -1,4 +1,5 @@
 import 'package:chat_app/components/my_textfield.dart';
+import 'package:chat_app/model/profile_pic.dart';
 import 'package:chat_app/services/chat/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,9 +8,11 @@ import 'package:flutter/material.dart';
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
   final String receiverUserId;
+  final String receiverUserName;
   const ChatPage({
     required this.receiverUserEmail,
     required this.receiverUserId,
+    required this.receiverUserName,
     super.key
     });
 
@@ -36,18 +39,27 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.receiverUserEmail),
+        title: Row(
+          children: [
+            ProfilePic(userId: widget.receiverUserId, radius: 15),
+            SizedBox(width: 10,),
+            Text(widget.receiverUserName),
+          ],
+        ),
         
       ),
-      body: Column(
-        //messages
-        children: [
-          Expanded(
-            child: _buildMessageList()
-            ),
-          // user input
-          _buildMessageInput()
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
+        child: Column(
+          //messages
+          children: [
+            Expanded(
+              child: _buildMessageList()
+              ),
+            // user input
+            _buildMessageInput()
+          ],
+        ),
       ),
     );
   }
@@ -86,14 +98,28 @@ class _ChatPageState extends State<ChatPage> {
     var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
     ? Alignment.centerRight
     : Alignment.centerLeft;
+    Color msgBox = (data['senderId'] == _firebaseAuth.currentUser!.uid)
+    ? Colors.greenAccent
+    : Colors.grey.shade200;
+    BorderRadius msgBoxRadius = (data['senderId'] == _firebaseAuth.currentUser!.uid)
+    ? BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15))
+    :BorderRadius.only(topRight: Radius.circular(15),bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15));
 
     return Container(
       alignment: alignment,
-      child: Column(
-        children: [
-          Text(data['senderEmail']),
-          Text(data['message'])
-        ]),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: msgBox,
+          borderRadius: msgBoxRadius
+        ),
+        child: Column(
+          children: [
+            // Text(data['senderEmail']),
+            Text(data['message'])
+          ]),
+      ),
     );
   }
 

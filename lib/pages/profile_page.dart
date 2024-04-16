@@ -104,7 +104,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
                     }                    
                   },
-                  child: ProfilePic(userId: _auth.currentUser!.uid,),
+                  child: ProfilePic(
+                    userId: _auth.currentUser!.uid,
+                    radius: 70,
+                    ),
                 ),
                
                 const SizedBox(height: 20,),
