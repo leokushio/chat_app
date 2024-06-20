@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCd7OC56o_EZUySo26tSQSAWnIidQpd6rc',
+    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     appId: '1:952908336305:web:9d61e8f9d46ecc9c5fe690',
     messagingSenderId: '952908336305',
     projectId: 'chatapp-61cfc',
-    authDomain: 'chatapp-61cfc.firebaseapp.com',
-    storageBucket: 'chatapp-61cfc.appspot.com',
+    authDomain: 'xxxxxxxxx.firebaseapp.com',
+    storageBucket: 'xxxxxxxxxxxxx.appspot.com',
     measurementId: 'G-9BK1KZ57Z5',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6qlX34IsGEquaynfQYTlc_-uKu8OYwKU',
+    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     appId: '1:952908336305:android:99396e312cde98985fe690',
     messagingSenderId: '952908336305',
-    projectId: 'chatapp-61cfc',
-    storageBucket: 'chatapp-61cfc.appspot.com',
+    projectId: 'xxxxxxxxxxxxxxx',
+    storageBucket: 'xxxxxxxxxxxxxxxx.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAPxs5CcwLKvYhc_laqZcdE_R5ddyw19gs',
+    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     appId: '1:952908336305:ios:c8c7605e7c9330c45fe690',
     messagingSenderId: '952908336305',
     projectId: 'chatapp-61cfc',
-    storageBucket: 'chatapp-61cfc.appspot.com',
+    storageBucket: 'xxxxxxxxxxxxxxxxxxx.appspot.com',
     iosBundleId: 'com.example.chatApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAPxs5CcwLKvYhc_laqZcdE_R5ddyw19gs',
+    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
     appId: '1:952908336305:ios:06123144986729c75fe690',
     messagingSenderId: '952908336305',
-    projectId: 'chatapp-61cfc',
-    storageBucket: 'chatapp-61cfc.appspot.com',
+    projectId: 'xxxxxxxxxxxxxxxxxx',
+    storageBucket: 'xxxxxxxxxxxxx.appspot.com',
     iosBundleId: 'com.example.chatApp.RunnerTests',
   );
 }
